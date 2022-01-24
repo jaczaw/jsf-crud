@@ -18,6 +18,7 @@ package com.okta.developer.presentation;
 
 import com.okta.developer.application.BookService;
 import com.okta.developer.entities.Book;
+import com.okta.developer.entities.Customer;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -34,6 +35,8 @@ public class BookBean {
     private String bookTitle;
     private Integer bookId;
     private Book book;
+    private Customer customer;
+    private String customerName;
     private static final String ACTION_SUCCESS = "success";
 
     @PostConstruct
@@ -43,6 +46,7 @@ public class BookBean {
         if (bookIdParam != null) {
             bookId = Integer.parseInt(bookIdParam);
             book = bookService.getBook(bookId);
+            customer = bookService.getAllCustomers().get(0);
             bookTitle = book.getBookTitle();
         }
     }
@@ -74,6 +78,7 @@ public class BookBean {
         Book book = new Book();
         book.setBookTitle(bookTitle);
         bookService.addBook(book);
+        bookService.addCustomer(bookService.prepareCustomer());
         return ACTION_SUCCESS;
     }
 
@@ -86,5 +91,17 @@ public class BookBean {
     public String delete() {
         bookService.delete(book);
         return ACTION_SUCCESS;
+    }
+
+    public String getCustomerName(){
+        StringBuilder name = new StringBuilder();
+        name.append(this.customer.getFirstName());
+        name.append(" ");
+        name.append(this.customer.getLastName());
+        name.append(" ");
+        name.append(this.customer.getAddress().getCity());
+        name.append(" ");
+        name.append(this.customer.getPhoneNumbers().stream().findFirst().get().getNumber());
+        return name.toString();
     }
 }

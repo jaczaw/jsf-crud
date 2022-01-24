@@ -22,6 +22,8 @@
     <persistence-unit name="book-pu" transaction-type="JTA">
         <jta-data-source>bookDatabase</jta-data-source>
         <class>com.okta.developer.entities.Book</class>
+        <class>com.okta.developer.entities.Address</class>
+        <class>com.okta.developer.entities.Phone</class>
         <properties>
             <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
         </properties>
