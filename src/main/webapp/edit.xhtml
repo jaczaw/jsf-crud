@@ -4,6 +4,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head></h:head>
 <h:body>
@@ -11,7 +12,11 @@
         <p:panel header="Update Book">
             <p:panelGrid columns="1" layout="grid">
                 <p:outputLabel for="book-title" value="Enter new book title"/>
-                <p:inputText id="book-title" value='#{bookBean.bookTitle}'/>
+                <p:inputText id="book-title" value="#{bookBean.bookTitle}"
+                             size="60" required="true"
+                             label="Title:" >
+                    <f:validateLength minimum="5" maximum="60" />
+                </p:inputText>
                 <p:commandButton value="Update" action="#{bookBean.update}" ajax="false"/>
             </p:panelGrid>
             <input type="hidden" name="bookId" value='#{param.bookId}'/>
